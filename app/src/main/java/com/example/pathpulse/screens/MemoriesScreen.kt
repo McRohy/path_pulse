@@ -28,14 +28,14 @@ import com.example.pathpulse.ui.theme.PathPulseTheme
 @Composable
 fun MemoriesScreen(
     modifier: Modifier = Modifier,
-
+    onNavigateToAddScreen: () -> Unit
 ) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = { MemoriesTopBar() },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { },
+                onClick = { onNavigateToAddScreen() },
                 shape = MaterialTheme.shapes.medium,
                 modifier = modifier.padding(
                     end = WindowInsets.safeDrawing.asPaddingValues()
@@ -77,7 +77,7 @@ fun MemoriesPreview() {
     PathPulseTheme  {
         MemoriesScreen(
             modifier = TODO(),
-
+            onNavigateToAddScreen = TODO()
         )
     }
 }

@@ -1,6 +1,7 @@
 package com.example.pathpulse.screens
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -15,16 +16,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
 
 @Composable
 fun AddScreen(
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = {
-            AddTopBar()
+            AddTopBar(onNavigateBack = onNavigateBack)
         }
     ) { InnerPadding ->
 
@@ -33,7 +36,7 @@ fun AddScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTopBar() {
+fun AddTopBar(onNavigateBack: () -> Unit) {
     CenterAlignedTopAppBar(
         title = {
             Row(
@@ -47,7 +50,7 @@ fun AddTopBar() {
             }
         },
         navigationIcon = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = onNavigateBack) {
                 Icon(Icons.Default.ArrowBack, contentDescription = "Späť")
             }
         }
@@ -59,7 +62,7 @@ fun AddTopBar() {
 fun AddScreenPreview() {
     PathPulseTheme  {
         AddScreen(
-
+            onNavigateBack = {},
         )
     }
 }
