@@ -1,15 +1,32 @@
 package com.example.pathpulse.navigation
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialogDefaults.containerColor
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,13 +34,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.pathpulse.screens.ExplorerScreen
 import com.example.pathpulse.screens.MemoriesScreen
-import com.example.pathpulse.screens.StatsScreen
+import com.example.pathpulse.screens.TravelStatsScreen
 import com.example.pathpulse.screens.AddScreen
 
 /**
- prednaska 6 a https://www.youtube.com/watch?v=O9csfKW3dZ4
+prednaska 6 a https://www.youtube.com/watch?v=O9csfKW3dZ4
  **/
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavController(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
@@ -37,10 +55,41 @@ fun NavController(modifier: Modifier = Modifier) {
     val currentRoute = currentRouteDes(navController)
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize(),
+        topBar = {
+            var shouldShowTopBar = false
+            var titleResId = 0
+
+            for (navItemTitle in bottomNavItems) {
+                if (navItemTitle.route == currentRoute) {
+                    shouldShowTopBar = true
+                    titleResId = navItemTitle.title
+                    break
+                }
+
+            }
+
+            if (shouldShowTopBar) {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(
+                            text = stringResource(id = titleResId),
+                            style = MaterialTheme.typography.headlineLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                )
+            }
+
+        },
+
         bottomBar = {
-            if (currentRoute in listOf("explorer", "stats", "memories")) {
-                NavigationBar {
+            if (currentRoute in bottomNavItems.map { it.route }) {
+                NavigationBar(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.contentColorFor(containerColor)
+                ) {
                     bottomNavItems.forEach { item ->
                         NavigationBarItem(
                             selected = currentRoute == item.route,
@@ -54,9 +103,9 @@ fun NavController(modifier: Modifier = Modifier) {
                                 }
                             },
                             icon = { Icon(imageVector = item.icon, contentDescription = null) },
-                            label = { Text(text = " ") }
                         )
                     }
+
                 }
             }
         }
@@ -70,26 +119,19 @@ fun NavController(modifier: Modifier = Modifier) {
                 ExplorerScreen(modifier = modifier)
             }
             composable(StatsDestination.route) {
-                StatsScreen(modifier = modifier)
+                TravelStatsScreen(modifier = modifier)
             }
             composable(MemoriesDestination.route) {
-                MemoriesScreen(
-                    modifier = modifier,
-                    onNavigateToAddScreen = { navController.navigate(AddDestination.route) }
-                )
+                MemoriesScreen(modifier = modifier)
             }
-            composable(AddDestination.route) {
-                AddScreen(
-                    modifier = modifier,
-                    onNavigateBack = { navController.popBackStack() }
-                )
+            composable(route = AddDestination.route) {
+                AddScreen(modifier = modifier)
             }
+
         }
     }
 }
 
-// Pomocná funkcia na získanie aktuálnej navigačnej cesty.
-// Získa aktuálnu cestu v NavHostControlleri.
 @Composable
 private fun currentRouteDes(navController: NavHostController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
