@@ -83,6 +83,26 @@ fun NavController(modifier: Modifier = Modifier) {
             }
 
         },
+        floatingActionButton = {
+            // iba pre MemoriesDestination pridáme FAB v topbare
+            if (currentRoute == MemoriesDestination.route) {
+                FloatingActionButton(
+                    onClick = {
+                        navController.navigate(AddDestination.route)
+                    },
+                    modifier = Modifier.padding(
+                        end = WindowInsets.safeDrawing
+                            .asPaddingValues()
+                            .calculateEndPadding(LocalLayoutDirection.current)
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null
+                    )
+                }
+            }
+        },
 
         bottomBar = {
             if (currentRoute in bottomNavItems.map { it.route }) {
