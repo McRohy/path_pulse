@@ -4,6 +4,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.StackedBarChart
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.pathpulse.R
 
@@ -27,13 +29,13 @@ object ExplorerDestination : MyAppDestination {
 object StatsDestination : MyAppDestination {
     override val title = R.string.stats
     override val route = "stats"
-    override val icon = Icons.Default.Person
+    override val icon = Icons.Default.StackedBarChart
 }
 
 object MemoriesDestination : MyAppDestination {
     override val title = R.string.memories
     override val route = "memories"
-    override val icon = Icons.Default.Person
+    override val icon = Icons.Default.Star
 }
 
 object AddDestination : MyAppDestination {
