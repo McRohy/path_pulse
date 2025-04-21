@@ -16,12 +16,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
 
 @Composable
 fun AddScreen(
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
 
@@ -31,6 +33,6 @@ fun AddScreen(
 @Composable
 fun AddScreenPreview() {
     PathPulseTheme  {
-        AddScreen()
+        //AddScreen()
     }
 }

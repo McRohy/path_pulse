@@ -82,7 +82,27 @@ fun NavController(modifier: Modifier = Modifier) {
                 )
             }
 
+            if (currentRoute == AddDestination.route) {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(
+                            text = "Your memory",
+                            style = MaterialTheme.typography.headlineLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            navController.popBackStack()
+                        }
+                        ) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "Späť")
+                        }
+                    }
+                )
+            }
         },
+
         floatingActionButton = {
             // iba pre MemoriesDestination pridáme FAB v topbare
             if (currentRoute == MemoriesDestination.route) {
@@ -125,7 +145,6 @@ fun NavController(modifier: Modifier = Modifier) {
                             icon = { Icon(imageVector = item.icon, contentDescription = null) },
                         )
                     }
-
                 }
             }
         }
@@ -142,10 +161,16 @@ fun NavController(modifier: Modifier = Modifier) {
                 TravelStatsScreen(modifier = modifier)
             }
             composable(MemoriesDestination.route) {
-                MemoriesScreen(modifier = modifier)
+                MemoriesScreen(
+                    navController = navController,
+                    modifier = modifier
+                )
             }
             composable(route = AddDestination.route) {
-                AddScreen(modifier = modifier)
+                AddScreen(
+                    navController = navController,
+                    modifier = modifier
+                )
             }
 
         }
