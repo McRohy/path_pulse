@@ -16,32 +16,7 @@ import com.example.pathpulse.ui.theme.PathPulseTheme
 
 @Composable
 fun ExplorerScreen(modifier: Modifier = Modifier) {
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
-        topBar = { ExploreTopBar() },
-    ) { innerPadding ->
-        LazyColumn(contentPadding = innerPadding) {
 
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ExploreTopBar(modifier: Modifier = Modifier) {
-    CenterAlignedTopAppBar(
-        title = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = "Explorer",
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-    )
 }
 
 @Preview(showBackground = true)

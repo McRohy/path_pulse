@@ -22,47 +22,15 @@ import com.example.pathpulse.ui.theme.PathPulseTheme
 
 @Composable
 fun AddScreen(
-    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Scaffold(
-        topBar = {
-            AddTopBar(onNavigateBack = onNavigateBack)
-        }
-    ) { InnerPadding ->
 
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AddTopBar(onNavigateBack: () -> Unit) {
-    CenterAlignedTopAppBar(
-        title = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = "add new memory",
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        },
-        navigationIcon = {
-            IconButton(onClick = onNavigateBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Späť")
-            }
-        }
-    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun AddScreenPreview() {
     PathPulseTheme  {
-        AddScreen(
-            onNavigateBack = {},
-        )
+        AddScreen()
     }
 }

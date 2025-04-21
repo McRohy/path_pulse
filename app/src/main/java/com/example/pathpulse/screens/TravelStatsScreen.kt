@@ -14,38 +14,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
 @Composable
-fun StatsScreen(
-    modifier: Modifier = Modifier
-) {
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
-        topBar = { StatsTopBar() },
-    ) { innerPadding ->
-    }
-}
+fun TravelStatsScreen(modifier: Modifier = Modifier) {
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun StatsTopBar() {
-    CenterAlignedTopAppBar(
-        title = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = "Travel Stats",
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun StatCardPreview() {
     PathPulseTheme{
-        StatsScreen()
+        TravelStatsScreen()
     }
 }
