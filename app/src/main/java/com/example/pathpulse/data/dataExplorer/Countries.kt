@@ -1,7 +1,7 @@
-package com.example.pathpulse.data
+package com.example.pathpulse.data.dataExplorer
+
 
 import com.example.pathpulse.R
-
 
 object DataSource {
     val countries = listOf(

@@ -1,4 +1,4 @@
-package com.example.pathpulse.data
+package com.example.pathpulse.data.dataExplorer
 
 
 data class CountryExplorer(
