@@ -33,7 +33,9 @@ import androidx.compose.ui.unit.dp
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
 @Composable
-fun TravelStatsScreen(modifier: Modifier = Modifier) {
+fun TravelStatsScreen(
+    viewModel: TravelStatsViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()

@@ -22,13 +22,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.pathpulse.AppViewModelProvider
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MemoriesScreen(
-    navController: NavHostController,
+    navigateToMemoryEntry: () -> Unit,
+    viewModel: MemoriesViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier,
 ) {
 

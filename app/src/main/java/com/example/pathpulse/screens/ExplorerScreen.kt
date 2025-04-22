@@ -39,12 +39,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.pathpulse.data.CountryExplorer
-import com.example.pathpulse.data.DataSource
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pathpulse.AppViewModelProvider
+import com.example.pathpulse.data.dataExplorer.CountryExplorer
+import com.example.pathpulse.data.dataExplorer.DataSource
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
 @Composable
-fun ExplorerScreen(modifier: Modifier = Modifier) {
+fun ExplorerScreen(
+    viewModel: ExplorerViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
         items(DataSource.countries) { country ->
             ExplorerCard(
