@@ -1,32 +1,122 @@
 package com.example.pathpulse.screens
 
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddScreen(
     navController: NavHostController,
+    viewModel: AddViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+    val scrollState = rememberScrollState()
+    val query by viewModel.searchQuery.collectAsState()
+    var searchActive by remember { mutableStateOf(false) }
 
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .verticalScroll(scrollState)
+            .padding(16.dp)
+    ) {
+        Text(text = "Find your country")
+
+        SearchBar(
+            query = query,
+            onQueryChange = { newQuery ->
+                viewModel.onSearchQueryChange(newQuery)
+            },
+            onSearch = {
+                viewModel.onSearchQuerySubmit()
+            },
+            active = searchActive,
+            onActiveChange = { isActive ->
+                searchActive = isActive
+            },
+            placeholder = { Text("Search country") },
+            modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp, max = 200.dp),
+        ) {
+
+        }
+
+        Spacer(Modifier.height(20.dp))
+
+        Text(
+            text = "Describe your memory"
+        )
+        OutlinedTextField(
+            value = uiState.description,
+            onValueChange = viewModel::onDescriptionChange,
+            label = { Text("My journey to...") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 150.dp, max = 250.dp),
+            maxLines = 10
+        )
+
+        Spacer(Modifier.height(20.dp))
+
+        Text(
+            text = "Load one your favourite picture"
+        )
+
+        Button(
+            onClick = { },
+            shape = RoundedCornerShape(3.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Gray),
+            modifier = Modifier.fillMaxWidth(),
+
+
+            ) {
+            Text("+")
+
+        }
+
+        Spacer(Modifier.height(20.dp))
+
+        Button(
+            onClick = {
+                viewModel.save()
+            },
+            shape = RoundedCornerShape(3.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 100.dp, max = 200.dp),
+
+
+            ) {
+            Text("ADD IN COLLECTION")
+        }
+    }
 }
 
 @Preview(showBackground = true)
