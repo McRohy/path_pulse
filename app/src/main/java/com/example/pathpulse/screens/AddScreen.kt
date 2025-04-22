@@ -23,7 +23,7 @@ import com.example.pathpulse.ui.theme.PathPulseTheme
 
 @Composable
 fun AddScreen(
-    navController: NavHostController,
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 

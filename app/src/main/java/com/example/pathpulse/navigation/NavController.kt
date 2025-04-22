@@ -168,7 +168,7 @@ fun NavController(modifier: Modifier = Modifier) {
             }
             composable(route = AddDestination.route) {
                 AddScreen(
-                    navController = navController,
+                    onNavigateBack = { navController.popBackStack()},
                     modifier = modifier
                 )
             }
