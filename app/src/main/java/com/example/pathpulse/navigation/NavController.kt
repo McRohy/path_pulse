@@ -104,7 +104,6 @@ fun NavController(modifier: Modifier = Modifier) {
         },
 
         floatingActionButton = {
-            // iba pre MemoriesDestination pridáme FAB v topbare
             if (currentRoute == MemoriesDestination.route) {
                 FloatingActionButton(
                     onClick = {
