@@ -31,12 +31,6 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
 
     init {
         viewModelScope.launch {
-            countriesRepository.readAll()
-                .collect { allCountries ->
-                    _uiState.update { it.copy(searchResults = allCountries) }
-                }
-        }
-        viewModelScope.launch {
             searchQuery
                 .debounce(300)
                 .distinctUntilChanged()
