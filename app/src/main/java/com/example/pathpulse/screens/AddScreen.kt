@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pathpulse.AppViewModelProvider
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
 
@@ -34,7 +35,7 @@ import com.example.pathpulse.ui.theme.PathPulseTheme
 @Composable
 fun AddScreen(
     navController: NavHostController,
-    viewModel: AddViewModel = viewModel(),
+    viewModel: AddViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -106,6 +107,7 @@ fun AddScreen(
         Button(
             onClick = {
                 viewModel.save()
+                navController.popBackStack()
             },
             shape = RoundedCornerShape(3.dp),
             modifier = Modifier

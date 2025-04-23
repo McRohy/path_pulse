@@ -30,7 +30,7 @@ import com.example.pathpulse.ui.theme.PathPulseTheme
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MemoriesScreen(
-    navigateToMemoryEntry: () -> Unit,
+    navController: NavHostController,
     viewModel: MemoriesViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier,
 ) {
