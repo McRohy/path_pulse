@@ -1,7 +1,7 @@
 package com.example.pathpulse.screens
 
 
-import androidx.lifecycle.SavedStateHandle
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pathpulse.data.dataMomories.CountriesRepository
@@ -18,20 +18,43 @@ import kotlinx.coroutines.launch
 
 
 data class AddUiState(
-    val description: String = "",
-    val searchResults: List<CountryEntity> = emptyList()
+    val countryDetails: CountryDetails = CountryDetails(),
+    val isEntryValid: Boolean = false,
+    val selectedCountry: CountryEntity? = null,
+    val searchResults: List<CountryEntity> = emptyList(),
+    val searchQuery: String = ""
 )
 
+data class CountryDetails(
+    val id: Int = 0,
+    val name: String = "",
+    val description: String = ""
+)
+
+// mapovanie UI → DB
+fun CountryDetails.toEntity(): CountryEntity =
+    CountryEntity(
+        id = id,
+        name = name,
+        description = description
+    )
+fun CountryEntity.toDetails(): CountryDetails =
+    CountryDetails(
+        id = id,
+        name = name,
+        description = description.orEmpty()
+    )
+
 class AddViewModel(private val countriesRepository: CountriesRepository) : ViewModel() {
+//    val searchQuery = MutableStateFlow("")
 
-    val searchQuery = MutableStateFlow("")
-
-    private val _uiState = MutableStateFlow(AddUiState())
-    val uiState: StateFlow<AddUiState> = _uiState.asStateFlow()
+    private var _uiState = MutableStateFlow(AddUiState())
+    val uiState: StateFlow<AddUiState> = _uiState.asStateFlow() //read only
 
     init {
         viewModelScope.launch {
-            searchQuery
+            uiState
+                .map { it.searchQuery }
                 .debounce(300)
                 .distinctUntilChanged()
                 .flatMapLatest { query ->
@@ -48,7 +71,7 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
     }
 
     fun onSearchQueryChange(newQuery: String) {
-        searchQuery.value = newQuery
+        _uiState.update { it.copy(searchQuery = newQuery) }
     }
 
     fun onSearchQuerySubmit() {
@@ -56,11 +79,36 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
     }
 
     fun onDescriptionChange(newDescription: String) {
-        _uiState.update { it.copy(description = newDescription) }
+        val updatedDetails = _uiState.value.countryDetails.copy(description = newDescription)
+        _uiState.update {
+            it.copy(
+                countryDetails = updatedDetails,
+                isEntryValid = validateInput(updatedDetails)
+            )
+        }
     }
 
+    fun onCountrySelected(country: CountryEntity) {
+        val details = country.toDetails()
+        _uiState.update {
+            it.copy(
+                selectedCountry = country,
+                countryDetails = details,
+                isEntryValid = validateInput(details),
+                searchQuery = country.name
+            )
+        }
+//        searchQuery.value = country.name
+    }
 
-    fun save() {
+    private fun validateInput(details: CountryDetails): Boolean =
+        details.name.isNotBlank() && details.description.isNotBlank()
 
+    suspend fun save() {
+        val state = _uiState.value
+        if (state.selectedCountry != null && state.isEntryValid) {
+            val updatedEntity = state.countryDetails.toEntity()
+            countriesRepository.updateDescriptionByName(updatedEntity)
+        }
     }
 }

@@ -23,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,9 +45,8 @@ fun AddScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
-    val query by viewModel.searchQuery.collectAsState()
     var searchActive by remember { mutableStateOf(false) }
-
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = modifier
@@ -54,17 +54,13 @@ fun AddScreen(
             .verticalScroll(scrollState)
             .padding(16.dp)
     ) {
-        Text(text = "Find your country")
-
 
         SearchBar(
-            query = query,
+            query = uiState.searchQuery,
             onQueryChange = { newQuery ->
                 viewModel.onSearchQueryChange(newQuery)
             },
-            onSearch = {
-                viewModel.onSearchQuerySubmit()
-            },
+            onSearch = { },
             active = searchActive,
             onActiveChange = { isActive ->
                 searchActive = isActive
@@ -85,6 +81,7 @@ fun AddScreen(
                             .fillMaxWidth()
                             .clickable {
                                 viewModel.onSearchQueryChange(country.name)
+                                viewModel.onCountrySelected(country)
                                 searchActive = false
                             }
                             .padding(8.dp)
@@ -95,11 +92,9 @@ fun AddScreen(
 
         Spacer(Modifier.height(20.dp))
 
-        Text(
-            text = "Describe your memory"
-        )
+        Text(text = "Describe your memory")
         OutlinedTextField(
-            value = uiState.description,
+            value = uiState.countryDetails.description,
             onValueChange = viewModel::onDescriptionChange,
             label = { Text("My journey to...") },
             modifier = Modifier
@@ -110,37 +105,33 @@ fun AddScreen(
 
         Spacer(Modifier.height(20.dp))
 
-        Text(
-            text = "Load one your favourite picture"
-        )
-
+        Text(text = "Load one your favourite picture")
         Button(
             onClick = {
+                // TODO: Implementácia načítania obrázku
             },
             shape = RoundedCornerShape(3.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Gray),
-            modifier = Modifier.fillMaxWidth(),
-
-
-            ) {
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text("+")
-
         }
 
         Spacer(Modifier.height(20.dp))
 
         Button(
+            enabled = uiState.isEntryValid,
             onClick = {
-                viewModel.save()
-                navController.popBackStack()
+                coroutineScope.launch {
+                    viewModel.save()
+                    navController.popBackStack()
+                }
             },
             shape = RoundedCornerShape(3.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 100.dp, max = 200.dp),
-
-
-            ) {
+                .heightIn(min = 100.dp, max = 200.dp)
+        ) {
             Text("ADD IN COLLECTION")
         }
     }

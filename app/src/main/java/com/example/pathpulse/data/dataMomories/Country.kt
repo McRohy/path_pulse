@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey
 data class CountryEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val name: String
+    val name: String,
+    val description: String?
 )
 
 

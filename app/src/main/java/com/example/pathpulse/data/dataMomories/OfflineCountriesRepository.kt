@@ -5,4 +5,11 @@ class OfflineCountriesRepository(
 ) : CountriesRepository {
     override fun readAll() = countryDao.readAll()
     override fun searchCountries(query: String) = countryDao.searchCountries(query)
+
+    override suspend fun updateDescriptionByName(country: CountryEntity) {
+        countryDao.updateDescriptionByName(
+            name = country.name,
+            description = country.description
+        )
+    }
 }
