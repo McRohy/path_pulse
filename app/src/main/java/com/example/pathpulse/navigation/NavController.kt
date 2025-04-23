@@ -32,7 +32,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.pathpulse.screens.ExplorerScreen
+import com.example.pathpulse.screens.explorer.ExplorerScreen
 import com.example.pathpulse.screens.MemoriesScreen
 import com.example.pathpulse.screens.TravelStatsScreen
 import com.example.pathpulse.screens.AddScreen

@@ -3,12 +3,11 @@ package com.example.pathpulse
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.pathpulse.screens.AddViewModel
-import com.example.pathpulse.screens.ExplorerViewModel
+import com.example.pathpulse.screens.explorer.ExplorerViewModel
 import com.example.pathpulse.screens.MemoriesViewModel
 import com.example.pathpulse.screens.TravelStatsViewModel
 
@@ -43,9 +42,5 @@ object AppViewModelProvider {
     }
 }
 
-/**
- * Extension function to queries for [Application] object and returns an instance of
- * [InventoryApplication].
- */
 fun CreationExtras.countryApplication(): PathPulseApplication =
     (this[AndroidViewModelFactory.APPLICATION_KEY] as PathPulseApplication)

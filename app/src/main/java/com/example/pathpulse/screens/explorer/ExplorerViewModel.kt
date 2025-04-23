@@ -1,4 +1,4 @@
-package com.example.pathpulse.screens
+package com.example.pathpulse.screens.explorer
 
 import androidx.lifecycle.ViewModel
 
