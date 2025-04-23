@@ -1,11 +1,14 @@
 package com.example.pathpulse.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -29,6 +32,7 @@ import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pathpulse.AppViewModelProvider
 import com.example.pathpulse.ui.theme.PathPulseTheme
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,6 +47,7 @@ fun AddScreen(
     val query by viewModel.searchQuery.collectAsState()
     var searchActive by remember { mutableStateOf(false) }
 
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -50,6 +55,7 @@ fun AddScreen(
             .padding(16.dp)
     ) {
         Text(text = "Find your country")
+
 
         SearchBar(
             query = query,
@@ -66,7 +72,25 @@ fun AddScreen(
             placeholder = { Text("Search country") },
             modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp, max = 200.dp),
         ) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(200.dp)
 
+            ) {
+                items(uiState.searchResults) { country ->
+                    Text(
+                        text = country.name,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                viewModel.onSearchQueryChange(country.name)
+                                searchActive = false
+                            }
+                            .padding(8.dp)
+                    )
+                }
+            }
         }
 
         Spacer(Modifier.height(20.dp))
@@ -91,7 +115,8 @@ fun AddScreen(
         )
 
         Button(
-            onClick = { },
+            onClick = {
+            },
             shape = RoundedCornerShape(3.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Gray),
             modifier = Modifier.fillMaxWidth(),
