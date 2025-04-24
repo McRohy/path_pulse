@@ -85,6 +85,7 @@ fun ExplorerCard(country: CountryExplorer,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxSize()
+                        .height(120.dp)
                         .blur(
                             radiusX = 5.dp,
                             radiusY = 5.dp,
