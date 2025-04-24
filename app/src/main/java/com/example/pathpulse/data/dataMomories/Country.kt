@@ -9,7 +9,8 @@ data class CountryEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val name: String,
-    val description: String?
+    val description: String?,
+    val updatedAt: Long?
 )
 
 
