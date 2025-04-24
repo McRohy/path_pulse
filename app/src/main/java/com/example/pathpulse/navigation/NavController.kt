@@ -33,9 +33,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.pathpulse.screens.explorer.ExplorerScreen
-import com.example.pathpulse.screens.MemoriesScreen
+import com.example.pathpulse.screens.memories.MemoriesScreen
 import com.example.pathpulse.screens.TravelStatsScreen
-import com.example.pathpulse.screens.AddScreen
+import com.example.pathpulse.screens.memories.AddScreen
 
 /**
 prednaska 6 a https://www.youtube.com/watch?v=O9csfKW3dZ4
@@ -104,7 +104,6 @@ fun NavController(modifier: Modifier = Modifier) {
         },
 
         floatingActionButton = {
-            // iba pre MemoriesDestination pridáme FAB v topbare
             if (currentRoute == MemoriesDestination.route) {
                 FloatingActionButton(
                     onClick = {
@@ -162,7 +161,6 @@ fun NavController(modifier: Modifier = Modifier) {
             }
             composable(MemoriesDestination.route) {
                 MemoriesScreen(
-                    navController = navController,
                     modifier = modifier
                 )
             }

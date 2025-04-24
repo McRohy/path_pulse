@@ -8,7 +8,7 @@ interface AppContainer {
 
 class AppDataContainer(private val context: Context) : AppContainer {
     override val countriesRepository: CountriesRepository by lazy {
-        OfflineCountriesRepository(
+        LocalCountriesRepository(
             AppDatabase.getDatabase(context).countryDao()
         )
     }
