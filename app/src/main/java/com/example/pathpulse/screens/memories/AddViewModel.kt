@@ -1,4 +1,4 @@
-package com.example.pathpulse.screens
+package com.example.pathpulse.screens.memories
 
 
 
@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pathpulse.data.dataMomories.CountriesRepository
 import com.example.pathpulse.data.dataMomories.CountryEntity
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +29,8 @@ data class AddUiState(
 data class CountryDetails(
     val id: Int = 0,
     val name: String = "",
-    val description: String = ""
+    val description: String? = null,
+    val updatedAt: Long? = null
 )
 
 // mapovanie UI → DB
@@ -36,14 +38,17 @@ fun CountryDetails.toEntity(): CountryEntity =
     CountryEntity(
         id = id,
         name = name,
-        description = description
+        description = description,
+        updatedAt = updatedAt
     )
 fun CountryEntity.toDetails(): CountryDetails =
     CountryDetails(
         id = id,
         name = name,
-        description = description.orEmpty()
+        description = description,
+        updatedAt = updatedAt
     )
+
 
 class AddViewModel(private val countriesRepository: CountriesRepository) : ViewModel() {
 //    val searchQuery = MutableStateFlow("")
@@ -102,7 +107,7 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
     }
 
     private fun validateInput(details: CountryDetails): Boolean =
-        details.name.isNotBlank() && details.description.isNotBlank()
+        details.name.isNotBlank() && !details.description.isNullOrBlank()
 
     suspend fun save() {
         val state = _uiState.value

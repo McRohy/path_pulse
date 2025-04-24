@@ -1,4 +1,4 @@
-package com.example.pathpulse.screens
+package com.example.pathpulse.screens.memories
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -94,7 +94,7 @@ fun AddScreen(
 
         Text(text = "Describe your memory")
         OutlinedTextField(
-            value = uiState.countryDetails.description,
+            value = uiState.countryDetails.description.orEmpty(),
             onValueChange = viewModel::onDescriptionChange,
             label = { Text("My journey to...") },
             modifier = Modifier
