@@ -19,6 +19,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +35,10 @@ import com.example.pathpulse.ui.theme.PathPulseTheme
 fun TravelStatsScreen(
     viewModel: TravelStatsViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier) {
+
+    val uiState by viewModel.uiState.collectAsState()
+    val progress = uiState.countries.size.toFloat() / uiState.totalCountriesInWorld.toFloat()
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -45,7 +51,7 @@ fun TravelStatsScreen(
                 .weight(3f)
         ) {
 
-            MyCircularProgress(progress = 0.12f)
+            MyCircularProgress(progress = progress)
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -70,7 +76,7 @@ fun TravelStatsScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.TravelExplore,
-                        contentDescription = "Ikona cestovania",
+                        contentDescription = "Travel Icon",
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(16.dp)
@@ -85,7 +91,7 @@ fun TravelStatsScreen(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(text = "Visited Countries", textAlign = TextAlign.Center)
-                    Text(text = "XXXX", textAlign = TextAlign.Center)
+                    Text(text = "${uiState.countries.size}", textAlign = TextAlign.Center)
                 }
             }
         }
@@ -112,7 +118,7 @@ fun TravelStatsScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.LocationOn,
-                        contentDescription = "Ikona lokácie",
+                        contentDescription = "Location Icon",
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(16.dp)
@@ -127,7 +133,7 @@ fun TravelStatsScreen(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(text = "Last visited country", textAlign = TextAlign.Center)
-                    Text(text = "XXXX", textAlign = TextAlign.Center)
+                    Text(text = "${uiState.lastUpdatedCountryName}", textAlign = TextAlign.Center)
                 }
             }
         }
@@ -143,7 +149,6 @@ fun MyCircularProgress(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        // Šedé pozadie
         CircularProgressIndicator(
             progress = 1f,
             color = Color.LightGray,
@@ -153,7 +158,6 @@ fun MyCircularProgress(
                 .aspectRatio(1f)
                 .padding(50.dp),
         )
-        // Skutočná „vyplnená“ časť
         CircularProgressIndicator(
             progress = progress,
             color = Color.Blue,
