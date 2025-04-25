@@ -23,7 +23,8 @@ data class AddUiState(
     val isEntryValid: Boolean = false,
     val selectedCountry: CountryEntity? = null,
     val searchResults: List<CountryEntity> = emptyList(),
-    val searchQuery: String = ""
+    val searchQuery: String = "",
+    val searchActive: Boolean = false
 )
 
 data class CountryDetails(
@@ -77,6 +78,10 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
 
     fun onSearchQueryChange(newQuery: String) {
         _uiState.update { it.copy(searchQuery = newQuery) }
+    }
+
+    fun onSearchBarActiveChange(active:Boolean) {
+        _uiState.update { it.copy(searchActive = active) }
     }
 
     fun onSearchQuerySubmit() {
