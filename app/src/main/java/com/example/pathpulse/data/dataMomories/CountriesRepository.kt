@@ -10,4 +10,5 @@ interface CountriesRepository {
 
     fun getDescribedCountries(): Flow<List<CountryEntity>>
     fun getLastUpdatedCountryName(): Flow<String?>
+    fun getCountriesCount(): Flow<Int>
 }

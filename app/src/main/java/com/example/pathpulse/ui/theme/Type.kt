@@ -2,6 +2,7 @@ package com.example.pathpulse.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.googlefonts.Font
@@ -23,7 +24,7 @@ val bodyFontFamily = FontFamily(
 
 val displayFontFamily = FontFamily(
     Font(
-        googleFont = GoogleFont("ADLaM Display"),
+        googleFont = GoogleFont("Acme"),
         fontProvider = provider,
     )
 )
@@ -37,7 +38,10 @@ val AppTypography = Typography(
     displaySmall = baseline.displaySmall.copy(fontFamily = displayFontFamily),
     headlineLarge = baseline.headlineLarge.copy(fontFamily = displayFontFamily),
     headlineMedium = baseline.headlineMedium.copy(fontFamily = displayFontFamily),
-    headlineSmall = baseline.headlineSmall.copy(fontFamily = displayFontFamily),
+    headlineSmall = baseline.headlineSmall.copy(
+        fontFamily = displayFontFamily,
+        fontWeight = FontWeight.Bold,
+    ),
     titleLarge = baseline.titleLarge.copy(fontFamily = displayFontFamily),
     titleMedium = baseline.titleMedium.copy(fontFamily = displayFontFamily),
     titleSmall = baseline.titleSmall.copy(fontFamily = displayFontFamily),

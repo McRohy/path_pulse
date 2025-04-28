@@ -19,4 +19,7 @@ class LocalCountriesRepository(private val countryDao: CountryDao) : CountriesRe
 
     override fun getLastUpdatedCountryName(): Flow<String?> =
         countryDao.getLastUpdatedCountryName()
+
+    override fun getCountriesCount(): Flow<Int> =
+        countryDao.getCountriesCount()
 }

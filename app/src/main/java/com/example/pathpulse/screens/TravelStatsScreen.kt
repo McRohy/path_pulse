@@ -31,11 +31,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pathpulse.AppViewModelProvider
+import com.example.pathpulse.R
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
 @Composable
@@ -44,10 +48,11 @@ fun TravelStatsScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val progress = uiState.countries.size.toFloat() / uiState.totalCountriesInWorld.toFloat()
 
     // BoxWithConstraints nám dáva maxWidth a maxHeight priestoru
-    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
+    BoxWithConstraints(
+        modifier = modifier.fillMaxSize()
+    ) {
 
         val circleCardHeight = maxHeight * 0.6f
 
@@ -55,154 +60,102 @@ fun TravelStatsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(6.dp)
+                .padding(dimensionResource(R.dimen.small_padding))
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(circleCardHeight)
-
+                    .height(circleCardHeight),
+                contentAlignment = Alignment.Center
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(2.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    MyCircularProgress(progress = progress)
-                }
-            }
-
-            Spacer(modifier = Modifier.height(5.dp))
-
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 100.dp, max = 120.dp),
-                shape = RoundedCornerShape(5.dp),
-                border = BorderStroke(
-                    5.dp,
-                    MaterialTheme.colorScheme.primary
+                MyCircularProgress(
+                    progress = uiState.progress,
                 )
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(8.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.TravelExplore,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
-                                .padding(16.dp)
-                        )
-                    }
-
-                    Column(
-                        modifier = Modifier
-                            .weight(2f)
-                            .fillMaxHeight(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "Visited Countries",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        Text(
-                            text ="${uiState.countries.size}",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    }
-                }
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_spacer)))
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 100.dp, max = 120.dp),
-                shape = RoundedCornerShape(5.dp),
-                border = BorderStroke(
-                    5.dp,
-                    MaterialTheme.colorScheme.primary
-                )
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.LocationOn,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
-                                .padding(16.dp)
-                        )
-                    }
+            StatsCard(
+                icon = Icons.Filled.TravelExplore,
+                title = stringResource(R.string.visited_countries),
+                value = uiState.numberOfCountriesVisited.toString()
+            )
 
-                    Column(
-                        modifier = Modifier
-                            .weight(2f)
-                            .fillMaxHeight(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "Last visited country",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        Text(
-                            text = "${uiState.lastUpdatedCountryName}",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    }
-                }
-            }
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_spacer)))
+
+            StatsCard(
+                icon = Icons.Filled.LocationOn,
+                title = stringResource(R.string.last_visited_country),
+                value = uiState.lastUpdatedCountryName.toString()
+            )
         }
     }
 }
 
 @Composable
-fun MyCircularProgress(
-    progress: Float,
-    modifier: Modifier = Modifier
-) {
-    Box(
+fun MyCircularProgress(progress: Float, modifier: Modifier = Modifier) {
+    CircularProgressIndicator(
+        progress = progress,
+        color = MaterialTheme.colorScheme.primary,
+        trackColor = Color.LightGray,
+        strokeWidth = 20.dp,
         modifier = Modifier
             .fillMaxHeight(0.9f)
             .aspectRatio(1f),
-        contentAlignment = Alignment.Center
+    )
+}
+
+@Composable
+fun StatsCard(icon: ImageVector, title: String, value: String, modifier: Modifier = Modifier) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 100.dp, max = 120.dp),
+        shape = RoundedCornerShape(
+            dimensionResource(R.dimen.card_rounded_shape_corner)
+        ),
+        border = BorderStroke(
+            dimensionResource(R.dimen.border_stroke),
+            MaterialTheme.colorScheme.primary
+        )
     ) {
-        CircularProgressIndicator(
-            progress = 1f,
-            color = Color.Gray,
-            strokeWidth = 20.dp,
-            modifier = Modifier.fillMaxSize()
-        )
-        CircularProgressIndicator(
-            progress = progress,
-            color = MaterialTheme.colorScheme.primary,
-            strokeWidth = 20.dp,
-            modifier = Modifier.fillMaxSize()
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(dimensionResource(R.dimen.small_padding))
+        ) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight(),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                        .padding(16.dp)
+                )
+            }
+
+            Column(
+                modifier = Modifier
+                    .weight(2f)
+                    .fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = title,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = value,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
     }
 }
 

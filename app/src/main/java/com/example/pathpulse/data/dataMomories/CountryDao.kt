@@ -26,4 +26,6 @@ interface CountryDao {
     @Query("SELECT name FROM country WHERE updatedAt IS NOT NULL ORDER BY updatedAt DESC LIMIT 1")
     fun getLastUpdatedCountryName(): Flow<String?>
 
+    @Query("SELECT COUNT(*) FROM country WHERE updatedAt IS NOT NULL")
+    fun getCountriesCount(): Flow<Int>
 }
