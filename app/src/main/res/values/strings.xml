@@ -9,6 +9,13 @@
     <string name="visited_countries">Visited Countries</string>
     <string name="last_visited_country">Last visited country</string>
 
+    <string name="describe_your_memory">Describe your memory</string>
+    <string name="my_journey_to">My journey to…</string>
+    <string name="rate_your_journey">Rate your journey</string>
+    <string name="add_in_collection">ADD IN COLLECTION</string>
+    <string name="find_your_country">Find country</string>
+
+
     <string name="uae_TOP">UNITED ARAB EMIRATES</string>
     <string name="uae_desc">The United Arab Emirates (UAE) is a country in the Middle East, located on the Arabian Peninsula. It consists of seven emirates, including Abu Dhabi (the capital) and Dubai. Known for its modern architecture, luxury tourism, and rapid development, the UAE is a global business hub. It has a rich cultural heritage, strong economy based on oil, trade, and tourism, and is known for landmarks like the Burj Khalifa and Palm Jumeirah.</string>
     <string name="usa_TOP">UNITED STATES OF AMERICA</string>
