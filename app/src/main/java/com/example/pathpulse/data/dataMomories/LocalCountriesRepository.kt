@@ -10,8 +10,9 @@ class LocalCountriesRepository(private val countryDao: CountryDao) : CountriesRe
         countryDao.updateDescriptionByName(
             name = country.name,
             description = country.description,
-            updatedAt = System.currentTimeMillis() / 1000 //sekundova presnost
-        )
+            updatedAt = System.currentTimeMillis() / 1000, //sekundova presnost
+            rating = country.rating
+            )
     }
 
     override fun getDescribedCountries(): Flow<List<CountryEntity>> =
@@ -22,4 +23,7 @@ class LocalCountriesRepository(private val countryDao: CountryDao) : CountriesRe
 
     override fun getCountriesCount(): Flow<Int> =
         countryDao.getCountriesCount()
+
+    override suspend fun deleteCountryByName(name: String) =
+        countryDao.deleteCountryByName(name)
 }

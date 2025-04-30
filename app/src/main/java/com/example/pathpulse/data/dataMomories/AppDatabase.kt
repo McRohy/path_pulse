@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase
 prepolulated database -> https://www.youtube.com/watch?v=pe28WeQ0VCc
 
  */
-@Database(entities = [CountryEntity::class], version = 4, exportSchema = false)
+@Database(entities = [CountryEntity::class], version = 5, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun countryDao(): CountryDao
 
@@ -25,8 +25,8 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "app_database"
                 )
-                    .createFromAsset("database/countries_v4.db")
-                   // .fallbackToDestructiveMigration() // ak sa schéma zmení, databáza sa zničí a nahradí preload súborom
+                    .createFromAsset("database/countries_v5.db")
+                     //.fallbackToDestructiveMigration() // ak sa schéma zmení, databáza sa zničí a nahradí preload súborom
                     .build()
                 INSTANCE = instance
                 instance
