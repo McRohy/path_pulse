@@ -1,7 +1,7 @@
 package com.example.pathpulse.screens.explorer
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +19,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,15 +33,15 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pathpulse.AppViewModelProvider
+import com.example.pathpulse.R
 import com.example.pathpulse.data.dataExplorer.CountryExplorer
 import com.example.pathpulse.data.dataExplorer.DataSource
 import com.example.pathpulse.ui.theme.PathPulseTheme
@@ -48,58 +49,66 @@ import com.example.pathpulse.ui.theme.PathPulseTheme
 @Composable
 fun ExplorerScreen(
     viewModel: ExplorerViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier
+) {
     LazyColumn(modifier = modifier) {
-        items(DataSource.countries) { country ->
+        items(DataSource.countries) {
             ExplorerCard(
-                country = country,
-                modifier = Modifier.padding(6.dp)
+                country = it,
+                modifier = Modifier.padding(dimensionResource(R.dimen.small_padding)),
             )
         }
     }
-
 }
+
 @Composable
-fun ExplorerCard(country: CountryExplorer,
-                 modifier: Modifier = Modifier) {
+fun ExplorerCard(country: CountryExplorer, modifier: Modifier = Modifier) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF3CA4DC)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+        shape = RoundedCornerShape(
+            dimensionResource(R.dimen.rounded_shape_corner)
+        ),
+        border = BorderStroke(
+            dimensionResource(R.dimen.border_stroke),
+            MaterialTheme.colorScheme.primary
+        ),
         modifier = modifier
     ) {
         var expanded by rememberSaveable { mutableStateOf(false) }
 
-        Column(
-            modifier = modifier
-        ) {
+        Column {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .border(5.dp, Color(0xFF3CA4DC), RoundedCornerShape(16.dp))
-
             ) {
                 Image(
-                    painter = painterResource(id = country.imageRes),
+                    painter = painterResource(country.imageRes),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxSize()
-                        .height(120.dp)
+                        .clip(
+                            RoundedCornerShape(
+                                topStart = dimensionResource(R.dimen.rounded_shape_corner),
+                                topEnd = dimensionResource(R.dimen.rounded_shape_corner)
+                            )
+                        )
                         .blur(
                             radiusX = 5.dp,
                             radiusY = 5.dp,
                             edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(1.dp))
                         )
                 )
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(dimensionResource(R.dimen.small_medium_padding))
+                ) {
                     Text(
                         text = stringResource(id = country.titleRes),
                         color = Color.White,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.align(Alignment.CenterStart)
                     )
                     IconButton(
@@ -114,14 +123,23 @@ fun ExplorerCard(country: CountryExplorer,
                         )
                     }
                 }
-
             }
         }
         if (expanded) {
-            Column(modifier = Modifier.padding(12.dp)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = dimensionResource(R.dimen.small_medium_padding),
+                        bottom = dimensionResource(R.dimen.small_medium_padding)
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
                 Text(
-                    text = stringResource(id = country.descRes),
+                    text = stringResource(country.descRes),
+                    style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Justify,
+                    modifier = Modifier.fillMaxWidth(0.85f) //fix vystredenie justified textu
                 )
             }
         }
@@ -131,7 +149,7 @@ fun ExplorerCard(country: CountryExplorer,
 @Preview(showBackground = true)
 @Composable
 fun ExplorerPreview() {
-    PathPulseTheme  {
+    PathPulseTheme {
         ExplorerScreen()
     }
 }

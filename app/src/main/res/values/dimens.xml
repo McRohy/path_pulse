@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="card_rounded_shape_corner">16.dp</dimen>
+    <dimen name="rounded_shape_corner">16.dp</dimen>
     <dimen name="border_stroke">6.dp</dimen>
 
     <dimen name="small_spacer">10.dp</dimen>
+    <dimen name="large_spacer">20.dp</dimen>
 
     <dimen name="small_padding">8.dp</dimen>
+    <dimen name="small_medium_padding">12.dp</dimen>
+    <dimen name="medium_padding">16.dp</dimen>
+
 </resources>
