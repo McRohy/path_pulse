@@ -112,7 +112,7 @@ fun StatsCard(icon: ImageVector, title: String, value: String, modifier: Modifie
             .fillMaxWidth()
             .heightIn(min = 100.dp, max = 120.dp),
         shape = RoundedCornerShape(
-            dimensionResource(R.dimen.card_rounded_shape_corner)
+            dimensionResource(R.dimen.rounded_shape_corner)
         ),
         border = BorderStroke(
             dimensionResource(R.dimen.border_stroke),

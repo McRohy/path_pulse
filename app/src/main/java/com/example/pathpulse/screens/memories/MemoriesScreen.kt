@@ -33,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import com.example.pathpulse.AppViewModelProvider
 import com.example.pathpulse.data.dataMomories.CountryEntity
 import com.example.pathpulse.ui.theme.PathPulseTheme
@@ -182,7 +181,7 @@ fun DetailCard(
 @Preview(showBackground = true)
 @Composable
 fun MemoriesPreview() {
-    val country = CountryEntity(id = 1, name = "Slovensko", description = "Krásna krajina pod Tatrami", 0)
+    val country = CountryEntity(id = 1, name = "Slovensko", description = "Krásna krajina pod Tatrami", 0, rating =0)
     PathPulseTheme {
         DetailCard(country = country, onClose = {})
     }
