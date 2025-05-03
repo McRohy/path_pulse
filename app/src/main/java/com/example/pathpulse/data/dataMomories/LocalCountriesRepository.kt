@@ -24,6 +24,9 @@ class LocalCountriesRepository(private val countryDao: CountryDao) : CountriesRe
     override fun getCountriesCount(): Flow<Int> =
         countryDao.getCountriesCount()
 
-    override suspend fun deleteCountryByName(name: String) =
-        countryDao.deleteCountryByName(name)
+    override suspend fun clearMemory(name: String) =
+        countryDao.clearMemory(name)
+
+    override fun getCountryById(id: Int): Flow<CountryEntity> =
+        countryDao.getCountryById(id)
 }

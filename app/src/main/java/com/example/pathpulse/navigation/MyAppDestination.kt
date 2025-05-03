@@ -43,3 +43,13 @@ object AddDestination : MyAppDestination {
     override val icon = Icons.Default.Add
 }
 
+object OneMemoryDestination : MyAppDestination {
+    override val title = R.string.add
+    override val route = "memory"
+
+    const val memoryIdArg = "memoryIdArg"
+    val routeWithArgs  = "$route/{$memoryIdArg}"
+
+    override val icon = Icons.Default.Star
+}
+

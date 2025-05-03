@@ -28,14 +28,17 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.pathpulse.screens.explorer.ExplorerScreen
 import com.example.pathpulse.screens.memories.MemoriesScreen
 import com.example.pathpulse.screens.TravelStatsScreen
 import com.example.pathpulse.screens.memories.AddScreen
+import com.example.pathpulse.screens.memories.MemoryDetailScreen
 
 /**
 prednaska 6 a https://www.youtube.com/watch?v=O9csfKW3dZ4
@@ -82,7 +85,7 @@ fun NavController(modifier: Modifier = Modifier) {
                 )
             }
 
-            if (currentRoute == AddDestination.route) {
+            if (currentRoute == AddDestination.route || currentRoute == OneMemoryDestination.routeWithArgs) {
                 CenterAlignedTopAppBar(
                     title = {
                         Text(
@@ -161,6 +164,7 @@ fun NavController(modifier: Modifier = Modifier) {
             }
             composable(MemoriesDestination.route) {
                 MemoriesScreen(
+                    navController = navController,
                     modifier = modifier
                 )
             }
@@ -171,6 +175,18 @@ fun NavController(modifier: Modifier = Modifier) {
                 )
             }
 
+            composable(
+                route  = OneMemoryDestination.routeWithArgs,
+                arguments = listOf(navArgument(OneMemoryDestination.memoryIdArg) {
+                        type = NavType.IntType
+                    }
+                )
+            ) {
+                MemoryDetailScreen(
+                    navController = navController,
+                    modifier = modifier,
+                )
+            }
         }
     }
 }

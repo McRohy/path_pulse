@@ -12,5 +12,7 @@ interface CountriesRepository {
     fun getLastUpdatedCountryName(): Flow<String?>
     fun getCountriesCount(): Flow<Int>
 
-    suspend fun deleteCountryByName(name: String)
+    suspend fun clearMemory(name: String)
+
+    fun getCountryById(id: Int): Flow<CountryEntity>
 }

@@ -31,5 +31,9 @@ interface CountryDao {
     fun getCountriesCount(): Flow<Int>
 
     @Query("UPDATE country SET description = null, updatedAt = null, rating = null WHERE name = :name")
-    suspend fun deleteCountryByName(name: String)
+    suspend fun clearMemory(name: String)
+
+    @Query("SELECT * from country WHERE id = :id")
+    fun getCountryById(id: Int): Flow<CountryEntity>
+
 }
