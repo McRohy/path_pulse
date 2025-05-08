@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -73,10 +72,9 @@ fun MemoryDetail(
     rating: Int,
     viewModel: MemoryDetailViewModel,
     navController: NavHostController,
-    modifier: Modifier = Modifier)
-{
+    modifier: Modifier = Modifier) {
     val coroutineScope = rememberCoroutineScope()
-    
+
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
         shape = RoundedCornerShape(
@@ -90,18 +88,20 @@ fun MemoryDetail(
             .fillMaxSize()
             .padding(dimensionResource(R.dimen.small_padding)),
     ) {
-
-        Box(modifier = Modifier.fillMaxSize()) {// zabalene do boxu aby Tlačidlo bolo položené na spodok
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween,    //top a bottom zarovnanie
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-
-
+                    .weight(1f)                               //zaberie všetok zostávajúci priestor
+                    .verticalScroll(rememberScrollState())
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
-                    painter = painterResource(R.drawable.world_wallpaper_low_quality),
+                    painter = painterResource(R.drawable.world_wallpaper),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -114,28 +114,24 @@ fun MemoryDetail(
                             )
                         )
                 )
-
                 Text(
                     text = name,
                     style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier
-                        .padding(dimensionResource(R.dimen.medium_padding)),
+                    modifier = Modifier.padding(dimensionResource(R.dimen.medium_padding))
                 )
-
                 Rating(
                     rating = rating,
-                    modifier = Modifier.padding(dimensionResource(R.dimen.small_padding)),
+                    modifier = Modifier.padding(dimensionResource(R.dimen.small_padding))
                 )
-
                 Text(
                     text = description,
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier
-                        .fillMaxWidth(0.8f),
+                    modifier = Modifier.fillMaxWidth(0.8f),
                     textAlign = TextAlign.Justify
                 )
             }
 
+            // tlačidlo vždy na spodku Column
             IconButton(
                 onClick = {
                     coroutineScope.launch {
@@ -143,14 +139,13 @@ fun MemoryDetail(
                         navController.popBackStack()
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
-                    .align(Alignment.BottomCenter)
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(dimensionResource(R.dimen.medium_padding))
                     .background(
                         color = Color.Gray,
                         shape = RoundedCornerShape(dimensionResource(R.dimen.rounded_shape_corner))
                     )
-
             ) {
                 Icon(
                     imageVector = Icons.Default.RestoreFromTrash,
