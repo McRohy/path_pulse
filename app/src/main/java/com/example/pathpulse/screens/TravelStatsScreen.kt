@@ -49,6 +49,22 @@ fun TravelStatsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    ContentForTravelStats(
+        valueCountries = uiState.numberOfCountriesVisited.toString(),
+        valueLastCountry = uiState.lastUpdatedCountryName.toString(),
+        progress = uiState.progress,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun ContentForTravelStats(
+    valueCountries: String,
+    valueLastCountry: String,
+    progress: Float,
+    modifier: Modifier = Modifier
+)
+{
     // BoxWithConstraints nám dáva maxWidth a maxHeight priestoru
     BoxWithConstraints(
         modifier = modifier.fillMaxSize()
@@ -69,7 +85,7 @@ fun TravelStatsScreen(
                 contentAlignment = Alignment.Center
             ) {
                 MyCircularProgress(
-                    progress = uiState.progress,
+                    progress = progress,
                 )
             }
 
@@ -78,7 +94,7 @@ fun TravelStatsScreen(
             StatsCard(
                 icon = Icons.Filled.TravelExplore,
                 title = stringResource(R.string.visited_countries),
-                value = uiState.numberOfCountriesVisited.toString()
+                value = valueCountries
             )
 
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_spacer)))
@@ -86,7 +102,7 @@ fun TravelStatsScreen(
             StatsCard(
                 icon = Icons.Filled.LocationOn,
                 title = stringResource(R.string.last_visited_country),
-                value = uiState.lastUpdatedCountryName.toString()
+                value = valueLastCountry
             )
         }
     }
@@ -163,6 +179,10 @@ fun StatsCard(icon: ImageVector, title: String, value: String, modifier: Modifie
 @Composable
 fun StatCardPreview() {
     PathPulseTheme{
-        TravelStatsScreen()
+        ContentForTravelStats(
+            valueCountries = "50",
+            valueLastCountry = "Slovakia",
+            progress = 0.3F,
+        )
     }
 }

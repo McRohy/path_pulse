@@ -38,7 +38,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import com.example.pathpulse.AppViewModelProvider
 import com.example.pathpulse.R
 import com.example.pathpulse.ui.theme.PathPulseTheme
@@ -53,16 +52,20 @@ fun MemoryDetailScreen (
     )
 {
     val uiState = viewModel.uiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
     MemoryDetail(
         name = uiState.value.countryDetails.name,
         description =  uiState.value.countryDetails.description,
         rating = uiState.value.countryDetails.rating,
-        viewModel = viewModel,
-        navigateBack = navigateBack,
+        onClick = {
+            coroutineScope.launch {
+                viewModel.clearMemory()
+                navigateBack()
+            }
+        },
         modifier = modifier
     )
-
 }
 
 @Composable
@@ -70,10 +73,8 @@ fun MemoryDetail(
     name: String,
     description: String,
     rating: Int,
-    viewModel: MemoryDetailViewModel,
-    navigateBack: () -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier) {
-    val coroutineScope = rememberCoroutineScope()
 
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
@@ -133,12 +134,7 @@ fun MemoryDetail(
 
             // tlačidlo vždy na spodku Column
             IconButton(
-                onClick = {
-                    coroutineScope.launch {
-                        viewModel.clearMemory()
-                        navigateBack()
-                    }
-                },
+                onClick = onClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(dimensionResource(R.dimen.medium_padding))
@@ -194,8 +190,7 @@ fun OneDetailMemoriesPreview() {
             name = "Slovensko",
             rating = 2,
             description = "Krásna krajina s bohatou históriou a nádhernou prírodou.Krásna krajina s bohatou históriou a nádhernou prírodou.",
-            viewModel = viewModel(factory = AppViewModelProvider.Factory),
-            navigateBack = TODO(),
+            onClick = {}
         )
     }
 }
