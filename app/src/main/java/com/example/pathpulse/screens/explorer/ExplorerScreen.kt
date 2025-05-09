@@ -2,8 +2,10 @@ package com.example.pathpulse.screens.explorer
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,8 +30,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -95,26 +95,24 @@ fun ExplorerCard(country: CountryExplorer, modifier: Modifier = Modifier) {
                             )
                         )
                 )
-                Box(
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(dimensionResource(R.dimen.small_medium_padding))
+                        .padding(dimensionResource(R.dimen.small_medium_padding)),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = stringResource(id = country.titleRes),
+                        text = stringResource(country.titleRes),
                         color = Color.White,
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.align(Alignment.CenterStart)
+                        style = MaterialTheme.typography.titleLarge
                     )
-                    IconButton(
-                        onClick = { expanded = !expanded },
-                        modifier = Modifier.align(Alignment.CenterEnd)
-                    ) {
+                    IconButton(onClick = { expanded = !expanded }) {
                         Icon(
                             imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
                             contentDescription = null,
                             tint = Color.White,
-                            modifier = Modifier.size(36.dp) // velikost ikony
+                            modifier = Modifier.size(36.dp)
                         )
                     }
                 }
@@ -146,5 +144,19 @@ fun ExplorerCard(country: CountryExplorer, modifier: Modifier = Modifier) {
 fun ExplorerPreview() {
     PathPulseTheme {
         ExplorerScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ExplorerCardPreview() {
+    PathPulseTheme {
+        ExplorerCard(
+            country = CountryExplorer(
+                R.drawable.explorer_uae_lowquality_blur,
+                R.string.uae_TOP,
+                R.string.uae_desc
+            ),
+        )
     }
 }
