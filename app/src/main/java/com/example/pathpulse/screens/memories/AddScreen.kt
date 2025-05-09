@@ -52,7 +52,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AddScreen(
     viewModel: AddViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    navController: NavHostController,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -122,7 +122,7 @@ fun AddScreen(
                 onClick = {
                     coroutineScope.launch {
                         viewModel.save()
-                        navController.popBackStack()
+                        navigateBack()
                     }
                 },
                 shape = RoundedCornerShape(dimensionResource(R.dimen.rounded_shape_corner)),

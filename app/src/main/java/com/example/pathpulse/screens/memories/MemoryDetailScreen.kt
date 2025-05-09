@@ -47,8 +47,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MemoryDetailScreen (
-    navController: NavHostController,
     viewModel: MemoryDetailViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier
     )
 {
@@ -59,7 +59,7 @@ fun MemoryDetailScreen (
         description =  uiState.value.countryDetails.description,
         rating = uiState.value.countryDetails.rating,
         viewModel = viewModel,
-        navController = navController,
+        navigateBack = navigateBack,
         modifier = modifier
     )
 
@@ -71,7 +71,7 @@ fun MemoryDetail(
     description: String,
     rating: Int,
     viewModel: MemoryDetailViewModel,
-    navController: NavHostController,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -136,7 +136,7 @@ fun MemoryDetail(
                 onClick = {
                     coroutineScope.launch {
                         viewModel.clearMemory()
-                        navController.popBackStack()
+                        navigateBack()
                     }
                 },
                 modifier = Modifier
@@ -195,7 +195,7 @@ fun OneDetailMemoriesPreview() {
             rating = 2,
             description = "Krásna krajina s bohatou históriou a nádhernou prírodou.Krásna krajina s bohatou históriou a nádhernou prírodou.",
             viewModel = viewModel(factory = AppViewModelProvider.Factory),
-            navController = TODO(),
+            navigateBack = TODO(),
         )
     }
 }

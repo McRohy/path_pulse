@@ -164,13 +164,15 @@ fun NavController(modifier: Modifier = Modifier) {
             }
             composable(MemoriesDestination.route) {
                 MemoriesScreen(
-                    navController = navController,
+                    navigateToMemory = {
+                        navController.navigate("${OneMemoryDestination.route}/${it}")
+                    },
                     modifier = modifier
                 )
             }
             composable(route = AddDestination.route) {
                 AddScreen(
-                    navController = navController,
+                    navigateBack = { navController.popBackStack() },
                     modifier = modifier
                 )
             }
@@ -183,7 +185,7 @@ fun NavController(modifier: Modifier = Modifier) {
                 )
             ) {
                 MemoryDetailScreen(
-                    navController = navController,
+                    navigateBack = { navController.popBackStack() },
                     modifier = modifier,
                 )
             }

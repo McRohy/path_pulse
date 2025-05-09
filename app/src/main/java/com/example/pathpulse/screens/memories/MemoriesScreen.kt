@@ -28,11 +28,10 @@ import com.example.pathpulse.R
 import com.example.pathpulse.navigation.OneMemoryDestination
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MemoriesScreen(
     viewModel: MemoriesViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    navController: NavHostController,
+    navigateToMemory: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val countriesList by viewModel.countriesList.collectAsState()
@@ -49,9 +48,8 @@ fun MemoriesScreen(
             ) {
                 items(countriesList) { country ->
 
-                    Button( onClick = // dôležité: tu použijete iba memory.id (Int), nie celý backStackEntry
-                    { navController.navigate("${OneMemoryDestination.route}/${country.id}") },
-
+                    Button(
+                     onClick = { navigateToMemory(country.id) },
                      shape = RoundedCornerShape(dimensionResource(R.dimen.rounded_shape_corner)),
                      colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.primary),
