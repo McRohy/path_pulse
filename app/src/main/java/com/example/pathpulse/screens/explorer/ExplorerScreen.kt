@@ -94,11 +94,6 @@ fun ExplorerCard(country: CountryExplorer, modifier: Modifier = Modifier) {
                                 topEnd = dimensionResource(R.dimen.rounded_shape_corner)
                             )
                         )
-                        .blur(
-                            radiusX = 5.dp,
-                            radiusY = 5.dp,
-                            edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(1.dp))
-                        )
                 )
                 Box(
                     modifier = Modifier

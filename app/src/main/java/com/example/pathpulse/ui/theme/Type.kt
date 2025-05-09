@@ -36,7 +36,10 @@ val AppTypography = Typography(
     displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),
     displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily),
     displaySmall = baseline.displaySmall.copy(fontFamily = displayFontFamily),
-    headlineLarge = baseline.headlineLarge.copy(fontFamily = displayFontFamily),
+    headlineLarge = baseline.headlineLarge.copy(
+        fontFamily = displayFontFamily,
+        fontWeight = FontWeight.Bold,
+    ),
     headlineMedium = baseline.headlineMedium.copy(
         fontFamily = displayFontFamily,
         fontWeight = FontWeight.Bold,
