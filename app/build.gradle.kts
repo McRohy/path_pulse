@@ -81,6 +81,11 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
+    // Glance App Widget
+    implementation("androidx.glance:glance-appwidget:1.1.1")
+    // Glance Material components (TitleBar, ProgressIndicator...)
+    implementation("androidx.glance:glance-material:1.1.1")
+
     // Testing
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")

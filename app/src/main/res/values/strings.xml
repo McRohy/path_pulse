@@ -35,4 +35,6 @@
     <string name="morocco_TOP">MOROCCO</string>
     <string name="morocco_desc">Morocco sits at the crossroads of Europe and Africa, spanning the Mediterranean and Atlantic coasts and encompassing part of the Sahara Desert. A constitutional monarchy, its economy blends traditional crafts—such as ceramics and leatherwork—with modern sectors like phosphate mining and tourism. The imperial cities of Marrakech, Fès, Rabat, and Meknès showcase ornate palaces, bustling souks, and centuries‑old madrasas. Atlas Mountains treks, Sahara camel caravans, and Andalusian‑inspired riads make Morocco an intoxicating fusion of Arab, Berber, and European influences.</string>
 
+    <string name="widget_name">Travel Progress Bar</string>
+
 </resources>
