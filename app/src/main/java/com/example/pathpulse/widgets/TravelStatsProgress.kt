@@ -12,7 +12,6 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.ImageProvider
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.components.Scaffold
 import androidx.glance.appwidget.components.TitleBar
 import androidx.glance.appwidget.provideContent
@@ -29,13 +28,9 @@ https://developer.android.com/codelabs/glance#0
 https://www.youtube.com/watch?v=bhrN7yFG0D4
  **/
 
-class TravelStatsProgressReceiver : GlanceAppWidgetReceiver() {
-    override val glanceAppWidget: GlanceAppWidget = TravelStatsProgress()
-}
-
-
 class TravelStatsProgress : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val title = context.getString(R.string.widget_title_progress)
 
         val container = AppDataContainer(context.applicationContext)
         val repo = container.countriesRepository
@@ -48,18 +43,18 @@ class TravelStatsProgress : GlanceAppWidget() {
 
         provideContent {
             GlanceTheme {
-                Content(numberOfCountriesVisited)
+                Content(numberOfCountriesVisited, title)
             }
         }
     }
 
     @Composable
-    private fun Content(numberOfCountriesVisited: Int) {
+    private fun Content(numberOfCountriesVisited: Int, title: String) {
         Scaffold(
             titleBar = {
                 TitleBar(
                     startIcon = ImageProvider(R.drawable.ic_launcher_foreground),
-                    title = "PathPulse"
+                    title = title
                 )
             },
             modifier = GlanceModifier.fillMaxSize()
@@ -70,7 +65,7 @@ class TravelStatsProgress : GlanceAppWidget() {
                 modifier = GlanceModifier
                     .fillMaxWidth()
                     .height(16.dp),
-                color = ColorProvider(Color.Black),
+                color = ColorProvider(Color(0xFF08677F)),
                 backgroundColor = ColorProvider(Color.LightGray)
             )
         }
