@@ -39,16 +39,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.pathpulse.AppViewModelProvider
 import com.example.pathpulse.R
 import com.example.pathpulse.data.dataExplorer.CountryExplorer
 import com.example.pathpulse.data.dataExplorer.DataSource
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
+/**
+ * Zobrazuje zoznam krajín vo forme vertikálneho scrollovateľného zoznamu.
+ *
+ * @param modifier Modifier pre prispôsobenie rozloženia.
+ */
 @Composable
 fun ExplorerScreen(
-    viewModel: ExplorerViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
@@ -61,8 +63,20 @@ fun ExplorerScreen(
     }
 }
 
+/**
+ * Zobrazuje kartu s obrázkom, názvom a rozbaľovacím popisom krajiny.
+ *
+ * Karta obsahuje: obrázok krajiny, názov krajiny a tlačidlo na rozbalenie/skrytie popisu,
+ * voliteľný textový popis, ktorý sa zobrazí po rozbalení.
+ *
+ * @param country Dáta krajiny.
+ * @param modifier Modifier pre prispôsobenie rozloženia karty.
+ */
 @Composable
-fun ExplorerCard(country: CountryExplorer, modifier: Modifier = Modifier) {
+fun ExplorerCard(
+    country: CountryExplorer,
+    modifier: Modifier = Modifier
+) {
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
         shape = RoundedCornerShape(
@@ -112,7 +126,7 @@ fun ExplorerCard(country: CountryExplorer, modifier: Modifier = Modifier) {
                             imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
                             contentDescription = null,
                             tint = Color.White,
-                            modifier = Modifier.size(36.dp)
+                            modifier = Modifier.size(dimensionResource(R.dimen.size_expand_icon))
                         )
                     }
                 }
@@ -132,13 +146,16 @@ fun ExplorerCard(country: CountryExplorer, modifier: Modifier = Modifier) {
                     text = stringResource(country.descRes),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Justify,
-                    modifier = Modifier.fillMaxWidth(0.85f) //fix vystredenie justified textu
+                    modifier = Modifier.fillMaxWidth(0.8f) //vystredenie justified textu
                 )
             }
         }
     }
 }
 
+/**
+ * Náhľad obrazovky ExplorerScreen.
+ */
 @Preview(showBackground = true)
 @Composable
 fun ExplorerPreview() {
@@ -147,6 +164,9 @@ fun ExplorerPreview() {
     }
 }
 
+/**
+ * Náhľad karty ExplorerCard s ukážkovými dátami.
+ */
 @Preview(showBackground = true)
 @Composable
 fun ExplorerCardPreview() {

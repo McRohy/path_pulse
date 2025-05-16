@@ -41,19 +41,25 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pathpulse.AppViewModelProvider
 import com.example.pathpulse.R
 import com.example.pathpulse.ui.theme.PathPulseTheme
 import kotlinx.coroutines.launch
 
-
+/**
+ * Obrazovka pre pridanie novej spomienky (krajiny) do kolekcie.
+ *
+ * @param modifier Modifier pre prispôsobenie rozloženia.
+ * @param viewModel ViewModel poskytujúci logiku a stav obrazovky.
+ *
+ * https://medium.com/mindorks/implement-instant-search-using-kotlin-flow-operators-7bd658bdfc4b
+ */
 @Composable
 fun AddScreen(
-    viewModel: AddViewModel = viewModel(factory = AppViewModelProvider.Factory),
     navigateBack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AddViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
@@ -144,8 +150,12 @@ fun AddScreen(
 }
 
 /**
- *  search bar tuto = https://www.youtube.com/watch?v=fKtCP9TcPaw
+ * Vyhľadávací panel pre filtrovanie krajín podľa mena.
  *
+ * @param query Aktuálny textový dotaz pre vyhľadávanie.
+ * @param viewModel ViewModel reagujúci na zmeny v dotaze a spracúvajúci výber.
+ *
+ * https://www.youtube.com/watch?v=fKtCP9TcPaw
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -199,7 +209,7 @@ fun AddSearchBar(
             .fillMaxWidth()
 
     ) {
-        LazyColumn() {
+        LazyColumn {
             items(uiState.searchResults) { country ->
                 Text(
                     text = country.name,
@@ -218,9 +228,13 @@ fun AddSearchBar(
 }
 
 /**
-stars namiesto load image co som prepiskol svoje zrucnosti
-stars tuto = https://www.youtube.com/watch?v=bhlQq5s0WHw
- **/
+ * Zobrazuje riadok hviezdičkového hodnotenia.
+ *
+ * @param rating Aktuálne hodnotenie (0–10). Počet vyplnených hviezdičiek = rating.
+ * @param modifier Modifier pre prispôsobenie rozloženia hodnotenia.
+ *
+ * https://www.youtube.com/watch?v=bhlQq5s0WHw
+ */
 @Composable
 fun RatingBar(
     modifier: Modifier = Modifier,
@@ -242,17 +256,21 @@ fun RatingBar(
                 },
                 contentDescription = null,
                 modifier = Modifier
-                    .size(35.dp)
+                    .size(dimensionResource(R.dimen.size_star))
                     .clickable { onRatingChanged(index) }
             )
         }
     }
 }
 
+/**
+ * Náhľad obrazovky AddScreen.
+ */
 @Preview(showBackground = true)
 @Composable
 fun AddScreenPreview() {
     PathPulseTheme {
-        //AddScreen()
+        AddScreen(navigateBack = {})
     }
 }
+

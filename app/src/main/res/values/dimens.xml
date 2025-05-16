@@ -11,4 +11,6 @@
     <dimen name="medium_padding">16.dp</dimen>
     <dimen name="large_padding">24.dp</dimen>
 
+    <dimen name="size_expand_icon">36.dp</dimen>
+    <dimen name="size_star">35.dp</dimen>
 </resources>

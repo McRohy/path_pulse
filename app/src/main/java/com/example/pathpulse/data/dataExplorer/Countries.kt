@@ -1,9 +1,17 @@
 package com.example.pathpulse.data.dataExplorer
 
-
 import com.example.pathpulse.R
 
+/**
+ * Zdroj dát pre sekciu Explorer.
+ * Obsahuje zoznam položiek typu CountryExplorer, ktoré definujú
+ * obrázok, nadpis a popis každej krajiny.
+ */
 object DataSource {
+    /**
+     * Zoznam krajín na zobrazovanie v UI.
+     * Každá položka obsahuje: obrázok, reťazec pre názov krajiny a pre popis krajiny.
+     */
     val countries = listOf(
         CountryExplorer(R.drawable.explorer_uae_lowquality_blur, R.string.uae_TOP, R.string.uae_desc),
         CountryExplorer(R.drawable.explorer_usa_lowquality_blur, R.string.usa_TOP, R.string.usa_desc),

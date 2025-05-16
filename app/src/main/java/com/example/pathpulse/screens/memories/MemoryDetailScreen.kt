@@ -43,13 +43,18 @@ import com.example.pathpulse.R
 import com.example.pathpulse.ui.theme.PathPulseTheme
 import kotlinx.coroutines.launch
 
-
+/**
+ * Obrazovka pre detail spomienky
+ *
+ * @param modifier Modifier pre prispôsobenie rozloženia obrazovky.
+ * @param viewModel ViewModel so SavedStateHandle a CountriesRepository.
+ */
 @Composable
 fun MemoryDetailScreen (
-    viewModel: MemoryDetailViewModel = viewModel(factory = AppViewModelProvider.Factory),
     navigateBack: () -> Unit,
-    modifier: Modifier = Modifier
-    )
+    modifier: Modifier = Modifier,
+    viewModel: MemoryDetailViewModel = viewModel(factory = AppViewModelProvider.Factory),
+)
 {
     val uiState = viewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
@@ -68,14 +73,23 @@ fun MemoryDetailScreen (
     )
 }
 
+/**
+ * Zobrazuje kartu s detailom spomienky.
+ *
+ * @param name Názov krajiny.
+ * @param description Detailný popis krajiny.
+ * @param rating Hodnotenie od 1 do 10.
+ * @param onClick Lambda volaná pri kliknutí na tlačidlo vymazania.
+ * @param modifier Modifier pre prispôsobenie rozloženia karty.
+ */
 @Composable
 fun MemoryDetail(
     name: String,
     description: String,
     rating: Int,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier) {
-
+    modifier: Modifier = Modifier
+) {
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
         shape = RoundedCornerShape(
@@ -128,7 +142,7 @@ fun MemoryDetail(
                     text = description,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.fillMaxWidth(0.8f),
-                    textAlign = TextAlign.Justify
+                    textAlign = TextAlign.Center
                 )
             }
 
@@ -155,6 +169,14 @@ fun MemoryDetail(
     }
 }
 
+/**
+ * Zobrazuje riadok hviezdičkového hodnotenia.
+ *
+ * @param rating Aktuálne hodnotenie.
+ * @param modifier Modifier pre prispôsobenie rozloženia hodnotenia.
+ *
+ * https://www.youtube.com/watch?v=bhlQq5s0WHw
+ */
 @Composable
 fun Rating(
     modifier: Modifier = Modifier,
@@ -174,14 +196,15 @@ fun Rating(
                     Icons.Rounded.StarOutline
                 },
                 contentDescription = null,
-                modifier = Modifier
-                    .size(35.dp)
+                modifier = Modifier.size(dimensionResource(R.dimen.size_star))
             )
         }
     }
 }
 
-
+/**
+ * Náhľad pre MemoryDetail s ukážkovými dátami.
+ */
 @Preview(showBackground = true)
 @Composable
 fun OneDetailMemoriesPreview() {
@@ -189,7 +212,7 @@ fun OneDetailMemoriesPreview() {
         MemoryDetail(
             name = "Slovensko",
             rating = 2,
-            description = "Krásna krajina s bohatou históriou a nádhernou prírodou.Krásna krajina s bohatou históriou a nádhernou prírodou.",
+            description = "I still remember the crisp morning air as I stepped off the train in Bratislava, excitement bubbling inside me.",
             onClick = {}
         )
     }

@@ -1,4 +1,3 @@
-
 package com.example.pathpulse
 
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
@@ -7,14 +6,14 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.pathpulse.screens.memories.AddViewModel
-import com.example.pathpulse.screens.explorer.ExplorerViewModel
 import com.example.pathpulse.screens.memories.MemoriesViewModel
-import com.example.pathpulse.screens.TravelStatsViewModel
+import com.example.pathpulse.screens.stats.TravelStatsViewModel
 import com.example.pathpulse.screens.memories.MemoryDetailViewModel
 
 
 /**
- * Provides Factory to create instance of ViewModel for the entire Inventory app
+ * Poskytovateľ ViewModelov pre celú aplikáciu.
+ * Definuje fabriku, ktorá vytvorí inštancie všetkých potrebných ViewModelov.
  */
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -38,17 +37,17 @@ object AppViewModelProvider {
         }
 
         initializer {
-            ExplorerViewModel()
-        }
-
-        initializer {
             MemoryDetailViewModel(
-                this.createSavedStateHandle(),        // sem Compose nahodí navArgumenty
+                this.createSavedStateHandle(),        // pre pracu s navArgumenty
                 countryApplication().container.countriesRepository
             )
         }
     }
 }
 
+/**
+ * Rozšírenie, ktoré z objektu Application získa a vráti inštanciu PathPulseApplication.
+ * Používa sa vo fabrike ViewModelov na získanie repozitára z aplikácie.
+ */
 fun CreationExtras.countryApplication(): PathPulseApplication =
     (this[AndroidViewModelFactory.APPLICATION_KEY] as PathPulseApplication)

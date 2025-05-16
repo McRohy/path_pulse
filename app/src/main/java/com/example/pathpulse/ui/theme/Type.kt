@@ -8,13 +8,19 @@ import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.googlefonts.Font
 import com.example.pathpulse.R
 
-
+/**
+ * Konfigurácia poskytovateľa pre načítanie Google Fonts.
+ */
 val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
     providerPackage = "com.google.android.gms",
     certificates = R.array.com_google_android_gms_fonts_certs
 )
 
+/**
+ * FontFamily pre bežné texty v aplikácii.
+ * Používa font "Acme".
+ */
 val bodyFontFamily = FontFamily(
     Font(
         googleFont = GoogleFont("Acme"),
@@ -22,6 +28,10 @@ val bodyFontFamily = FontFamily(
     )
 )
 
+/**
+ * FontFamily pre zobrazovacie texty (nadpisy a titulky).
+ * Používa font "Acme".
+ */
 val displayFontFamily = FontFamily(
     Font(
         googleFont = GoogleFont("Acme"),
@@ -32,6 +42,9 @@ val displayFontFamily = FontFamily(
 // Default Material 3 typography values
 val baseline = Typography()
 
+/**
+ * Nastavenia pre typografie aplikácie.
+ */
 val AppTypography = Typography(
     displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),
     displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily),

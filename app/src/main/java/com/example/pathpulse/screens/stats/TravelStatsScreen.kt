@@ -1,4 +1,4 @@
-package com.example.pathpulse.screens
+package com.example.pathpulse.screens.stats
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,10 +41,17 @@ import com.example.pathpulse.AppViewModelProvider
 import com.example.pathpulse.R
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
+/**
+ * Obrazovka štatistík cestovania.
+ * Získa stav z TravelStatsViewModel a odovzdá ho do ContentForTravelStats.
+ *
+ * @param modifier Modifier pre vonkajšie prispôsobenie.
+ * @param viewModel Inštancia ViewModelu so štatistikami (Factory).
+ */
 @Composable
 fun TravelStatsScreen(
-    viewModel: TravelStatsViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: TravelStatsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -57,19 +63,28 @@ fun TravelStatsScreen(
     )
 }
 
+/**
+ * Vnútorný layout obrazovky štatistík, ktorý zobrazuje:
+ * kruhový progress indikátor so zadaným progressom
+ * štatistické karty – počet navštívených krajín a názov poslednej krajiny.
+ *
+ * @param valueCountries  Reťazec s počtom krajín.
+ * @param valueLastCountry Reťazec s názvom poslednej krajiny.
+ * @param progress  Hodnota 0f..1f pre kruhový progress.
+ * @param modifier Modifier pre vonkajšie prispôsobenie.
+ */
 @Composable
 fun ContentForTravelStats(
     valueCountries: String,
     valueLastCountry: String,
     progress: Float,
     modifier: Modifier = Modifier
-)
-{
-    // BoxWithConstraints nám dáva maxWidth a maxHeight priestoru
+) {
+    // BoxWithConstraints poskytuje maxWidth a maxHeight priestoru
     BoxWithConstraints(
         modifier = modifier.fillMaxSize()
     ) {
-
+        // Určenie výšky pre CircularProgress ako 60% z dostupnej výšky
         val circleCardHeight = maxHeight * 0.6f
 
         Column(
@@ -108,25 +123,47 @@ fun ContentForTravelStats(
     }
 }
 
+/**
+ * Kruhový progress indikátor.
+ *
+ * @param progress Hodnota 0f..1f určujúca, ako plný bude kruh.
+ * @param modifier Modifier pre vonkajšie prispôsobenie.
+ */
 @Composable
-fun MyCircularProgress(progress: Float, modifier: Modifier = Modifier) {
+fun MyCircularProgress(
+    progress: Float,
+    modifier: Modifier = Modifier
+) {
     CircularProgressIndicator(
-        progress = progress,
-        color = MaterialTheme.colorScheme.primary,
-        trackColor = Color.LightGray,
-        strokeWidth = 20.dp,
-        modifier = Modifier
+        progress = { progress },
+        modifier = modifier
             .fillMaxHeight(0.9f)
             .aspectRatio(1f),
+        color = MaterialTheme.colorScheme.primary,
+        strokeWidth = 20.dp,
+        trackColor = Color.LightGray,
     )
 }
 
+/**
+ * Štatistická karta s ikonou, popisom a hodnotou.
+ *
+ * @param icon Ikona z Material Icons.
+ * @param title Popis štatistiky.
+ * @param value Hodnota štatistiky .
+ * @param modifier Modifier pre vonkajšie prispôsobenie.
+ */
 @Composable
-fun StatsCard(icon: ImageVector, title: String, value: String, modifier: Modifier = Modifier) {
+fun StatsCard(
+    icon: ImageVector,
+    title: String,
+    value: String,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .heightIn(min = 100.dp, max = 120.dp),
+            .height(120.dp),
         shape = RoundedCornerShape(
             dimensionResource(R.dimen.rounded_shape_corner)
         ),
@@ -148,8 +185,9 @@ fun StatsCard(icon: ImageVector, title: String, value: String, modifier: Modifie
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
-                        .padding(16.dp)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(dimensionResource(R.dimen.medium_padding))
                 )
             }
 
@@ -175,10 +213,13 @@ fun StatsCard(icon: ImageVector, title: String, value: String, modifier: Modifie
     }
 }
 
+/**
+ * Náhľad pre ContentForTravelStats s ukážkovými dátami.
+ */
 @Preview(showBackground = true)
 @Composable
 fun StatCardPreview() {
-    PathPulseTheme{
+    PathPulseTheme {
         ContentForTravelStats(
             valueCountries = "50",
             valueLastCountry = "Slovakia",

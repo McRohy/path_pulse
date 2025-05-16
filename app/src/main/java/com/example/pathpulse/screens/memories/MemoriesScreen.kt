@@ -26,11 +26,14 @@ import com.example.pathpulse.R
 import com.example.pathpulse.data.dataMomories.CountryEntity
 import com.example.pathpulse.ui.theme.PathPulseTheme
 
+/**
+ * Obrazovka pre zobrazenie zoznamu spomienok (krajín).
+ */
 @Composable
 fun MemoriesScreen(
-    viewModel: MemoriesViewModel = viewModel(factory = AppViewModelProvider.Factory),
     navigateToMemory: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: MemoriesViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     val countriesList by viewModel.countriesList.collectAsState()
 
@@ -41,6 +44,14 @@ fun MemoriesScreen(
     )
 }
 
+/**
+ * Obsahová časť obrazovky zobrazujúca grid tlačidiel pre každú krajinu.
+ * Využíva LazyVerticalGrid na vykresľovanie položiek.
+ *
+ * @param countriesList Zoznam entít CountryEntity, kde každá reprezentuje jednu krajinu.
+ * @param navigateToMemory Lambda volaná s ID krajiny pri kliknutí na príslušné tlačidlo.
+ * @param modifier Modifier pre prispôsobenie rozloženia.
+ */
 @Composable
 fun ContentForMemories(
     countriesList: List<CountryEntity>,
@@ -77,6 +88,9 @@ fun ContentForMemories(
     }
 }
 
+/**
+ * Náhľad pre ContentForMemories s ukážkovými dátami.
+ */
 @Preview(showBackground = true)
 @Composable
 fun MemoriesPreview() {

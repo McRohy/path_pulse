@@ -5,12 +5,11 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,16 +35,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.pathpulse.R
 import com.example.pathpulse.screens.explorer.ExplorerScreen
 import com.example.pathpulse.screens.memories.MemoriesScreen
-import com.example.pathpulse.screens.TravelStatsScreen
+import com.example.pathpulse.screens.stats.TravelStatsScreen
 import com.example.pathpulse.screens.memories.AddScreen
 import com.example.pathpulse.screens.memories.MemoryDetailScreen
 
 /**
-prednaska 6 a https://www.youtube.com/watch?v=O9csfKW3dZ4
- **/
-
+ * Hlavná navigačná funkcia aplikácie, ktorá nastavuje:
+ * Scaffold s TopAppBar, BottomBar a FAB podľa aktuálnej trasy,
+ * NavHost s jednotlivými composable destináciami
+ *
+ * @param modifier Modifier pre prispôsobenie rozloženia celej obrazovky.
+ *
+ * prednáška 6 Navigácia, Architektúra UI a
+ * https://www.youtube.com/watch?v=O9csfKW3dZ4
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavController(modifier: Modifier = Modifier) {
@@ -92,7 +98,7 @@ fun NavController(modifier: Modifier = Modifier) {
                 CenterAlignedTopAppBar(
                     title = {
                         Text(
-                            text = "Your memory",
+                            text = stringResource(R.string.your_memory),
                             style = MaterialTheme.typography.headlineLarge,
                             fontWeight = FontWeight.Bold
                         )
@@ -102,7 +108,7 @@ fun NavController(modifier: Modifier = Modifier) {
                             navController.popBackStack()
                         }
                         ) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = "Späť")
+                            Icon(Icons.Default.ArrowBackIosNew, contentDescription = null)
                         }
                     }
                 )
@@ -196,6 +202,12 @@ fun NavController(modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * Pomocná funkcia na zistenie aktuálnej navigačnej trasy z NavHostController.
+ *
+ * @param navController Inštancia NavHostController, z ktorej čítame backStackEntry.
+ * @return Aktuálna route ako String, alebo null ak backStackEntry nie je dostupné.
+ */
 @Composable
 private fun currentRouteDes(navController: NavHostController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
