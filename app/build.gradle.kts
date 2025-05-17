@@ -61,32 +61,20 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.navigation:navigation-compose:2.8.4")
 
-    // build.gradle (app level)
-    implementation("androidx.navigation:navigation-compose:2.7.6")
-
-    //pre ikonky
-    implementation ("androidx.compose.material:material-icons-extended")
-
-    //
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0")
+    implementation("androidx.navigation:navigation-compose:2.7.6") // navigácia medzi obrazovkami
+    implementation ("androidx.compose.material:material-icons-extended") //rozšírené Material ikony
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0") // lifecycle rozšírenia
+    implementation(libs.androidx.ui.text.google.fonts) // google fontov
 
     //Room
     implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
     implementation("androidx.core:core-ktx:1.15.0")
-    implementation(libs.androidx.ui.text.google.fonts)
     ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
     implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
 
-    // Pre ViewModel, coroutines a Compose
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4") //podpora pre coroutines
 
-    // Glance App Widget
-    implementation("androidx.glance:glance-appwidget:1.1.1")
-    // Glance Material components (TitleBar, ProgressIndicator...)
-    implementation("androidx.glance:glance-material:1.1.1")
-
-    // Testing
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    implementation("androidx.glance:glance-appwidget:1.1.1") //Glance App Widget
+    implementation("androidx.glance:glance-material:1.1.1") //Glance Material components (ProgressIndicator)
 }
