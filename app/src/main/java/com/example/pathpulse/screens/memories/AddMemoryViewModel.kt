@@ -41,6 +41,7 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
      * ignoruje identické dotazy. flatMapLatest spustí nové vyhľadávanie a zruší predchádzajúce,
      * ak príde nová query a stateIn premení celý flow na StateFlow
      *
+     * https://medium.com/mindorks/implement-instant-search-using-kotlin-flow-operators-7bd658bdfc4b
      */
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     private val searchResults: StateFlow<List<CountryEntity>> =

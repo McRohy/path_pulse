@@ -52,8 +52,6 @@ import kotlinx.coroutines.launch
  *
  * @param modifier Modifier pre prispôsobenie rozloženia.
  * @param viewModel ViewModel poskytujúci logiku a stav obrazovky.
- *
- * https://medium.com/mindorks/implement-instant-search-using-kotlin-flow-operators-7bd658bdfc4b
  */
 @Composable
 fun AddScreen(
