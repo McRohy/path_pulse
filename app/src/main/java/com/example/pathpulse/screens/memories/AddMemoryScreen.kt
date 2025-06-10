@@ -1,5 +1,7 @@
 package com.example.pathpulse.screens.memories
 
+import android.annotation.SuppressLint
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,14 +37,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.pathpulse.AppViewModelProvider
+import com.example.pathpulse.helpers.PhotoPickerHelper
 import com.example.pathpulse.R
 import com.example.pathpulse.ui.theme.PathPulseTheme
 import kotlinx.coroutines.launch
@@ -53,6 +60,7 @@ import kotlinx.coroutines.launch
  * @param modifier Modifier pre prispôsobenie rozloženia.
  * @param viewModel ViewModel poskytujúci logiku a stav obrazovky.
  */
+@SuppressLint("ContextCastToActivity")
 @Composable
 fun AddScreen(
     navigateBack: () -> Unit,
@@ -62,6 +70,14 @@ fun AddScreen(
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
+
+    //pre Photo Picker
+    val activity = LocalContext.current as ComponentActivity
+    val photoPicker = rememberSaveable(
+        saver = PhotoPickerHelper.saver(activity)
+    ) {
+        PhotoPickerHelper(activity)
+    }
 
     if (uiState.searchActive) {
         Box(modifier = modifier.fillMaxSize())
@@ -90,7 +106,7 @@ fun AddScreen(
                 text = stringResource(R.string.describe_your_memory),
                 style = MaterialTheme.typography.headlineSmall
             )
-            
+
             OutlinedTextField(
                 value = uiState.countryDetails.description,
                 onValueChange = viewModel::onDescriptionChange,
@@ -106,6 +122,27 @@ fun AddScreen(
                 maxLines = 10,
                 shape = RoundedCornerShape(dimensionResource(R.dimen.rounded_shape_corner)),
             )
+
+            Spacer(Modifier.height(dimensionResource(R.dimen.large_spacer)))
+
+            // Picker
+            photoPicker.PhotoUploader(Modifier.fillMaxWidth()) { uri ->
+                viewModel.onImagePicked(uri)
+            }
+
+            Spacer(Modifier.height(dimensionResource(R.dimen.small_spacer)))
+
+            // Preview
+            photoPicker.selectedImageUri?.let { uri ->
+                AsyncImage(
+                    model = uri, contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop
+                )
+            }
 
             Spacer(Modifier.height(dimensionResource(R.dimen.large_spacer)))
 

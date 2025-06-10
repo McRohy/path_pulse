@@ -1,8 +1,11 @@
 package com.example.pathpulse.screens.memories
 
-
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pathpulse.constans.TIMEOUT_MILLIS
+import com.example.pathpulse.helpers.CountryMappers.toDetails
+import com.example.pathpulse.helpers.CountryMappers.toEntity
 import com.example.pathpulse.data.dataMomories.CountriesRepository
 import com.example.pathpulse.data.dataMomories.CountryEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,13 +30,6 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
     private val _uiState = MutableStateFlow(AddUiState())
 
     /**
-     * Companion object pre ukladanie konštánt.
-     */
-    companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
-    }
-
-    /**
      * Stream výsledkov vyhľadávania krajín podľa zadanej query.
      *
      * reaguje na každú zmenu searchQuery v internom _uiState a pridáva 300 ms debounce,
@@ -55,6 +51,19 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
                 SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 emptyList()
             )
+
+    fun onImagePicked(newUri: Uri) {
+        val old = _uiState.value
+        val details = CountryDetails(
+            id = old.countryDetails.id,
+            name = old.countryDetails.name,
+            description = old.countryDetails.description,
+            updatedAt = old.countryDetails.updatedAt,
+            rating = old.countryDetails.rating,
+            imgUri = newUri.toString()
+        )
+        updateUiState(details, old)
+    }
 
     /**
      * Uchováva aktuálny stav obrazovky vrátane
@@ -85,7 +94,8 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
             name = old.countryDetails.name,
             description = old.countryDetails.description,
             updatedAt = old.countryDetails.updatedAt,
-            rating = newRating
+            rating = newRating,
+            imgUri = old.countryDetails.imgUri
         )
         updateUiState(details, old)
     }
@@ -136,7 +146,8 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
             name = old.countryDetails.name,
             description = newDescription,
             updatedAt = old.countryDetails.updatedAt,
-            rating = old.countryDetails.rating
+            rating = old.countryDetails.rating,
+            imgUri = old.countryDetails.imgUri
         )
         updateUiState(details, old)
     }
@@ -154,7 +165,8 @@ class AddViewModel(private val countriesRepository: CountriesRepository) : ViewM
             name = fromDbCountry.name,
             description = old.countryDetails.description,
             updatedAt = old.countryDetails.updatedAt,
-            rating = old.countryDetails.rating
+            rating = old.countryDetails.rating,
+            imgUri = old.countryDetails.imgUri
         )
 
         _uiState.value = AddUiState(
@@ -234,30 +246,6 @@ data class CountryDetails(
     val name: String = "",
     val description: String = "",
     val updatedAt: Long = 0L,
-    val rating: Int = 0
+    val rating: Int = 0,
+    val imgUri: String = ""
 )
-
-/**
- * Mapovanie z CountryDetails na CountryEntity pre uloženie.
- */
-fun CountryDetails.toEntity(): CountryEntity =
-    CountryEntity(
-        id = id,
-        name = name,
-        description = description,
-        updatedAt = updatedAt,
-        rating = rating
-    )
-
-/**
- * Mapovanie z CountryEntity (databázovej entity) na CountryDetails pre UI.
- */
-fun CountryEntity.toDetails(): CountryDetails =
-    CountryDetails(
-        id = id,
-        name = name,
-        description = description.orEmpty(),
-        updatedAt = updatedAt ?: 0L,
-        rating = rating ?: 0
-    )
-

@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pathpulse.data.dataMomories.CountriesRepository
+import com.example.pathpulse.helpers.CountryMappers.toDetails
 import com.example.pathpulse.navigation.OneMemoryDestination
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

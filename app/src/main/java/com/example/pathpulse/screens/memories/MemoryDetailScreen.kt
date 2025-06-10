@@ -1,7 +1,6 @@
 package com.example.pathpulse.screens.memories
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,11 +32,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.pathpulse.AppViewModelProvider
 import com.example.pathpulse.R
 import com.example.pathpulse.ui.theme.PathPulseTheme
@@ -63,6 +62,7 @@ fun MemoryDetailScreen (
         name = uiState.value.countryDetails.name,
         description =  uiState.value.countryDetails.description,
         rating = uiState.value.countryDetails.rating,
+        imgUri = uiState.value.countryDetails.imgUri,
         onClick = {
             coroutineScope.launch {
                 viewModel.clearMemory()
@@ -87,6 +87,7 @@ fun MemoryDetail(
     name: String,
     description: String,
     rating: Int,
+    imgUri: String?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -115,13 +116,13 @@ fun MemoryDetail(
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = painterResource(R.drawable.world_wallpaper),
+                AsyncImage(
+                    model = if (imgUri.isNullOrEmpty()) R.drawable.world_wallpaper else imgUri,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
+                        .height(250.dp)
                         .clip(
                             RoundedCornerShape(
                                 topStart = dimensionResource(R.dimen.rounded_shape_corner),
@@ -213,6 +214,7 @@ fun OneDetailMemoriesPreview() {
             name = "Slovensko",
             rating = 2,
             description = "I still remember the crisp morning air as I stepped off the train in Bratislava, excitement bubbling inside me.",
+            imgUri = "",
             onClick = {}
         )
     }

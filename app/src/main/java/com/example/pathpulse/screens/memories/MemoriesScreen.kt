@@ -97,9 +97,9 @@ fun MemoriesPreview() {
     PathPulseTheme {
         ContentForMemories(
             countriesList = listOf(
-                CountryEntity(id = 1, name = "Slovakia", description = "", updatedAt = 0L , rating = 0),
-                CountryEntity(id = 2, name = "Hungary", description = "", updatedAt = 0L, rating = 0),
-                CountryEntity(id = 3, name = "Austria", description = "", updatedAt = 0L, rating = 0)
+                CountryEntity(id = 1, name = "Slovakia", description = "", updatedAt = 0L , rating = 0, imgUri = ""),
+                CountryEntity(id = 2, name = "Hungary", description = "", updatedAt = 0L, rating = 0, imgUri = ""),
+                CountryEntity(id = 3, name = "Austria", description = "", updatedAt = 0L, rating = 0, imgUri = "")
             ),
             navigateToMemory = {},
          )
