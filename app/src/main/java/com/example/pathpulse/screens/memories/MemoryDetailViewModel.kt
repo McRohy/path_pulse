@@ -3,6 +3,7 @@ package com.example.pathpulse.screens.memories
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pathpulse.constans.TIMEOUT_MILLIS
 import com.example.pathpulse.data.dataMomories.CountriesRepository
 import com.example.pathpulse.helpers.CountryMappers.toDetails
 import com.example.pathpulse.navigation.OneMemoryDestination
@@ -23,13 +24,6 @@ class MemoryDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val countriesRepository: CountriesRepository
 ) : ViewModel() {
-
-    /**
-     * Companion object pre ukladanie konštánt.
-     */
-    companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
-    }
 
     // prečítame si ID a name priamo zo SavedStateHandle
     private val memoryId: Int = checkNotNull(

@@ -2,6 +2,8 @@ package com.example.pathpulse.screens.stats
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pathpulse.constans.TIMEOUT_MILLIS
+import com.example.pathpulse.constans.TOTAL_COUNTRIES
 import com.example.pathpulse.data.dataMomories.CountriesRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -12,16 +14,6 @@ import kotlinx.coroutines.flow.stateIn
  * ViewModel zodpovedný za zhromažďovanie štatistík cestovania
  */
 class TravelStatsViewModel(countriesRepository: CountriesRepository) : ViewModel() {
-    /**
-     * Companion object pre ukladanie konštánt.
-     * Využitie pre vyhnutie sa „magickým číslam“.
-     */
-    companion object {
-        // udržiavanie spojenia -> vyhnutie sa zbytočným zastaveniam a opätovným spúšťaniam
-        private const val TIMEOUT_MILLIS = 5_000L
-        private const val TOTAL_COUNTRIES = 195
-    }
-
     /**
      * Uchováva stav obrazovky (UI).
      * Zoznam položiek sa načíta z CountriesRepository a namapuje na TravelStatsUiState.
