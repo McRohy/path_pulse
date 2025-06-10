@@ -39,4 +39,6 @@
     <string name="widget_title_progress">PathPulse - Progress</string>
 
     <string name="your_memory">Your memory</string>
+
+    <string name="pick_one_img">PICK ONE IMAGE</string>
 </resources>

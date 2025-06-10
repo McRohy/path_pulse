@@ -13,7 +13,8 @@ data class CountryEntity(
     val name: String,
     val description: String?,
     val updatedAt: Long?,
-    val rating: Int?
+    val rating: Int?,
+    val imgUri: String?
 )
 
 

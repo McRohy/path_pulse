@@ -2,6 +2,7 @@ package com.example.pathpulse.data.dataMomories
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Update
 
 import kotlinx.coroutines.flow.Flow
 
@@ -26,19 +27,18 @@ interface CountryDao {
     fun searchCountries(query: String): Flow<List<CountryEntity>>
 
     /**
-     * Aktualizuje popis, hodnotenie a čas aktualizácie krajiny podľa názvu.
-     * @param name Názov krajiny.
-     * @param description Nový popis krajiny.
-     * @param updatedAt Čas aktualizácie v sekundách od epochy.
-     * @param rating Hodnotenie krajiny.
+     * Aktualizuje data o krajine.
+     *
      */
-    @Query("UPDATE country SET description = :description, updatedAt = :updatedAt, rating = :rating WHERE name = :name")
+    @Query("UPDATE country SET description = :description, updatedAt = :updatedAt, rating = :rating, imgUri = :imgUri WHERE name = :name")
     suspend fun updateDescriptionByName(
         name: String,
         description: String?,
         updatedAt: Long,
-        rating: Int?
+        rating: Int?,
+        imgUri: String?
     )
+
 
     /**
      * Získa krajiny, ktoré majú vyplnený popis.

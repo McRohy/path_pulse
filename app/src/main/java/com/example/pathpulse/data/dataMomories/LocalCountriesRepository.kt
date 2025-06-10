@@ -23,16 +23,18 @@ class LocalCountriesRepository(private val countryDao: CountryDao) : CountriesRe
         countryDao.searchCountries(query)
 
     /**
-     * Aktualizuje popis, hodnotenie a čas poslednej aktualizácie krajiny identifikovanej podľa názvu.
+     * Aktualizuje data o krajine.
      */
     override suspend fun updateDescriptionByName(country: CountryEntity) {
         countryDao.updateDescriptionByName(
             name = country.name,
             description = country.description,
             updatedAt = System.currentTimeMillis() / 1000, //sekundova presnost
-            rating = country.rating
+            rating = country.rating,
+            imgUri = country.imgUri
         )
     }
+
 
     /**
      * Načíta všetky krajiny, ktoré majú vyplnenie.

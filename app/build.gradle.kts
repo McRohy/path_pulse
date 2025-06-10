@@ -77,4 +77,7 @@ dependencies {
 
     implementation("androidx.glance:glance-appwidget:1.1.1") //Glance App Widget
     implementation("androidx.glance:glance-material:1.1.1") //Glance Material components (ProgressIndicator)
+
+
+    implementation("io.coil-kt:coil-compose:2.6.0") // Coil pre načítavanie obrázkov v Compose
 }
